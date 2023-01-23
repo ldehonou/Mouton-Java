@@ -53,15 +53,16 @@ Question 4: how behaves fastify:
 
 Question 5:
 
-| Criteria                                             | Stateful session | JWT |
-|------------------------------------------------------|------------------|-----|
-| Scalability                                          |                  |     |
-| Architecture Complexity                              |                  |     |
-| Type and quantity of information known by the client |                  |     |
-| Revocation strategy                                  |                  |     |
-| Impact if a session leaks                            |                  |     |
-| Common weaknesses due to misconfiguration            |                  |     |
-| Client-side strategy to protect and submit the token |                  |     |
-| Additional libraries requirerement                   |                  |     |
+
+| Criteria                                             | Stateful session                                                                                                            | JWT                                                                                                         |
+|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| Scalability                                          |Increase the user number = issues with performance so we need at the start a good architecture to ensure a good functionment |The tokens used are stored on the client side, so there is no session state stored on the backend            |
+| Architecture Complexity                              |Required a backend service for the session management                                                                        |Simpler : only required client to store and send token                                                       |
+| Type and quantity of information known by the client |Information stored by the backend : state of the session so on client side : id to identify the session on the backend       |Backend generate a token with information cryptographically signed and sent to the client to be stored       |
+| Revocation strategy                                  |Easier : we just have to invalidate an id or add a duration of inactivity                                                    |More difficult : we can add a list of revoked tokens but it can have a cost on the performance               |
+| Impact if a session leaks                            |Important because with a session leak, we can find the identity of a user and the information related to the session.        |Limited because a token has only limited in time data and this data aren't sensible                          |
+| Common weaknesses due to misconfiguration            |Due to a bad configuration on the backend or the session management                                                          |Due to programming errors, bad configuration on the client side or the bad implementation of JWT tools       |
+| Client-side strategy to protect and submit the token |To be sure that the session identfier is stored in a secured way we can use a cookie HttpOnly or a local secured storage     |To be sure that the token is stored in a secured way we can use a cookie HttpOnly or a local secured storage |
+| Additional libraries requirerement                   |We can use additional libraries to manage sessions for example. But it increase the complexity of the architecture           |We cane use addition libraries to generate or validate tokens on the backend. It's usually easier            |
 
 Question 6:
